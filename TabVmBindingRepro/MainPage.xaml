@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:sho="http://sharpnado.com"
+             xmlns:views="clr-namespace:TabVmBindingRepro.ContentViews"
+             xmlns:viewModels="clr-namespace:TabVmBindingRepro.ViewModels"
+             x:DataType="viewModels:MainViewModel"
+             x:Class="TabVmBindingRepro.MainPage">
+
+    <VerticalStackLayout HorizontalOptions="Fill" Padding="0, 20">
+        <Label HorizontalTextAlignment="Center" Text="{Binding PageTitle}" Margin="0, 10" />
+        <sho:TabHostView Style="{StaticResource TabHostView}" HeightRequest="60"
+              Padding="20,0"
+              SelectedIndex="{Binding Source={x:Reference Switcher}, 
+                              Path=SelectedIndex, Mode=TwoWay}"
+              VerticalOptions="Fill"
+              HorizontalOptions="Fill">
+            
+            <sho:UnderlinedTabItem Style="{StaticResource UnderlinedTabItem}" Label="A View"
+                                    LabelSize="36">
+                <sho:UnderlinedTabItem.Badge>
+                    <sho:BadgeView Style="{StaticResource BadgeView}" Text="new" Margin="0,2,2,0" />
+                </sho:UnderlinedTabItem.Badge>
+            </sho:UnderlinedTabItem>
+            <sho:UnderlinedTabItem Style="{StaticResource UnderlinedTabItem}" Label="B View"
+                                    LabelSize="36" />
+            <sho:UnderlinedTabItem Style="{StaticResource UnderlinedTabItem}" Label="C View"
+                                    LabelSize="36">
+                <sho:UnderlinedTabItem.Badge>
+                    <sho:BadgeView Style="{StaticResource BadgeView}" Text="2" Margin="0,2,2,0" />
+                </sho:UnderlinedTabItem.Badge>
+            </sho:UnderlinedTabItem>
+        </sho:TabHostView>
+        
+        <sho:ViewSwitcher x:Name="Switcher"
+                           Margin="0"
+                           Animate="True"
+                           SelectedIndex="{Binding SelectedViewModelIndex, Mode=TwoWay}">
+            <sho:DelayedView
+                x:TypeArguments="views:TabAView"
+                AccentColor="{StaticResource Primary}"
+                Animate="True"
+                UseActivityIndicator="True" />
+            <sho:DelayedView
+                x:TypeArguments="views:TabBView"
+                AccentColor="{StaticResource Primary}"
+                Animate="True"
+                UseActivityIndicator="True" />
+            <sho:DelayedView
+                x:TypeArguments="views:TabCView"
+                AccentColor="{StaticResource Primary}"
+                Animate="True"
+                UseActivityIndicator="True" />
+        </sho:ViewSwitcher>
+    </VerticalStackLayout>
+
+</ContentPage>
